@@ -19,10 +19,20 @@ $(function(){
             if(device.code);
             else 
             {
+                var trackerName;
+                var trackerID;
+                var GeoLo_E;
+                var GeoLo_N;
+                var receiveTime;
                 var k = 0;
+
                 function showData_Tracker1() {
                     var dogData = device[Object.keys(device)[0]][k].data;
-                    var dataOut = dogData.device_name + "\n" + dogData.GPS_E + "\n" + dogData.GPS_N + "\n" + dogData.recv;
+                    trackerName = dogData.device_name;
+                    GeoLo_N = dogData.GPS_N;
+                    GeoLo_E = dogData.GPS_E;
+                    receiveTime = dogData.recv;
+                    var dataOut = trackerName + "\n" + GeoLo_E + "\n" + GeoLo_N + "\n" + receiveTime;
                     dogDom.text(dataOut);
                     k++;
                     if( k < device[Object.keys(device)[0]].length ){
@@ -37,7 +47,11 @@ $(function(){
                 showData_Tracker1();
                 function showData_Tracker2() {
                     var dogData = device[Object.keys(device)[1]][k].data;
-                    var dataOut = dogData.device_name + "\n" + dogData.GPS_E + "\n" + dogData.GPS_N + "\n" + dogData.recv;
+                    trackerName = dogData.device_name;
+                    GeoLo_N = dogData.GPS_N;
+                    GeoLo_E = dogData.GPS_E;
+                    receiveTime = dogData.recv;
+                    var dataOut = trackerName + "\n" + GeoLo_E + "\n" + GeoLo_N + "\n" + receiveTime;
                     dogDom.text(dataOut);
                     k++;
                     if( k < device[Object.keys(device)[1]].length ){
@@ -58,6 +72,34 @@ $(function(){
                     console.log(dogData);
                 }
                 */
+                
+                function IDGeoLoTime_I  (){
+                    var jsonArr = [];
+                    if(trackerName == "追蹤器_34")
+                        trackerID = 0;
+                    else if(trackerName == "Tracker_0035")
+                        trackerID = 1;
+                    jsonArr.push({TrackerID: trackerID , N: GeoLo_N, E: GeoLo_E , Time: receiveTime });
+                    return jsonArr;
+                }
+
+                function iot_app(){
+                  
+                    
+                }
+                var profile = {
+                        'dm_name': 'DogInput',
+                        'odf_list': [],
+                        'idf_list': [IDGeoLoTime_I],
+                        'origin_odf_list': [],
+                        'origin_idf_list': [IDGeoLoTime_I]],
+                        'is_sim': false,
+                        'df_list':['IDGeoLoTime_I']
+                    }
+                var ida = {
+                        'iot_app': iot_app,
+                    }; // How iot device receive data (format)
+                dai(profile,ida);   
             }
         });
     }
