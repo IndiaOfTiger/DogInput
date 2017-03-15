@@ -87,15 +87,16 @@ $(function(){
                   
                     
                 }
+
                 var profile = {
-                        'dm_name': 'DogInput',
-                        'odf_list': [],
-                        'idf_list': [IDGeoLoTime_I],
-                        'origin_odf_list': [],
-                        'origin_idf_list': [IDGeoLoTime_I]],
-                        'is_sim': false,
-                        'df_list':['IDGeoLoTime_I']
-                    }
+                    'dm_name': 'DogInput',
+                    'is_sim': false,
+                    'df_list':[IDGeoLoTime_I],
+                    'origin_df_list': [IDGeoLoTime_I],
+
+                }
+
+        
                 var ida = {
                         'iot_app': iot_app,
                     }; // How iot device receive data (format)

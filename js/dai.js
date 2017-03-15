@@ -8,42 +8,22 @@ const dai = function (profile, ida) {
         }
         return s() + s() + s();
     })();
-
-    // Not Sure
+    // produce mac address
     if (profile.is_sim == undefined){
         profile.is_sim = false;
     }
-    //
-
-    /*function setUpName(dfList)
-    {
-        for (var i = 0; i < dfList.length; i++) {
-            df_name = dfList[i].name.replace(/_/g, '-')
-            df_func[df_name] = dfList[i];
-            console.log(df_func[df_name]);
-            dfList[i] = df_name;
-            console.log(df_name);
-        }
-    }
-
-    setUpName(profile.odf_list);
-    setUpName(profile.idf_list);*/
-    for (var i = 0; i < profile.idf_list.length; i++) {
-        df_name = profile.idf_list[i].name.replace(/_/g, '-')
-        df_func[df_name] = profile.idf_list[i];
-        profile.idf_list[i] = df_name;
+    // not simulating
+    for (var i = 0; i < profile.df_list.length; i++) {
+        df_name = profile.df_list[i].name.replace(/_/g, '-')
+        df_func[df_name] = profile.df_list[i];
+        profile.df_list[i] = df_name;
         console.log(df_name);
     }
+    // eg: Color_I -> Color-I
+    // df_func = Color_O r,g,b
 
-    for (var i = 0; i < profile.odf_list.length; i++) {
-        df_name = profile.odf_list[i].name.replace(/_/g, '-')
-        df_func[df_name] = profile.odf_list[i];
-        profile.odf_list[i] = df_name;
-        console.log(df_name);
-    }
-
-
-    function pull (odf_name, data) {
+    function pull (odf_name, data) { // who called this
+        console.log("odf_name:", odf_name); // odf_name = control whyyyyyy? odf_name and data (?)
         if (odf_name == 'Control') {
             switch (data[0]) {
             case 'SET_DF_STATUS':
@@ -81,6 +61,8 @@ const dai = function (profile, ida) {
     window.onbeforeunload = deregister;
     window.onclose = deregister;
     window.onpagehide = deregister;
-    console.log('call dan lo');
+
     dan.init(pull, csmapi.get_endpoint(), mac_addr, profile, init_callback);
+    // window.location.origin = hostname + protocol
+    // all pull function sended
 };
